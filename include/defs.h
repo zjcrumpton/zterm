@@ -10,4 +10,11 @@ extern const char *TITLE;
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
 
+// World Generation
+#define CHUNK_SIZE 32
+#define SPAWN_ZONE_RADIUS CHUNK_SIZE / 4
+extern const int TILE_SIZE;
+extern const int TILES_ACROSS;
+extern const int TILES_DOWN;
+
 #endif

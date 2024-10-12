@@ -7,6 +7,10 @@ int main() {
     return -1;
   }
 
+  if (load_textures() < 0) {
+    return -1;
+  }
+
   while (game_state.running) {
     handle_input();
     render_frame();
