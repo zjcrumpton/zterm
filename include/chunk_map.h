@@ -22,5 +22,7 @@ unsigned int hash_chunk(ChunkCoordinate coord);
 void add_chunk(ChunkCoordinate coord, Chunk *chunk);
 Chunk *get_chunk(ChunkCoordinate coord);
 void free_chunks();
+void world_to_chunk_and_tile(int world_x, int world_y, ChunkCoordinate *coord,
+                             int *tile_x, int *tile_y);
 
 #endif

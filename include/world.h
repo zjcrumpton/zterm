@@ -1,7 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "../include/defs.h"
+#include "defs.h"
 #include <stdbool.h>
 
 typedef enum {

@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Iinclude -I/usr/include/SDL2 -D_REENTRANT
-LDFLAGS = -lSDL2 -lSDL2_image
+LDFLAGS = -lSDL2 -lSDL2_image -lm
 
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:src/%.c=build/%.o)

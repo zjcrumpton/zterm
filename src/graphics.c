@@ -1,4 +1,5 @@
 #include "../include/graphics.h"
+#include "../include/camera.h"
 #include "../include/defs.h"
 #include "../include/game_state.h"
 #include <SDL2/SDL_image.h>
@@ -95,8 +96,20 @@ void render_tile(SDL_Rect *rect, enum TextureFile file, int x, int y) {
   SDL_Rect dest;
   dest.x = x;
   dest.y = y;
-  dest.w = TILE_SIZE;
-  dest.h = TILE_SIZE;
+  dest.w = TILE_SIZE * zoom_level;
+  dest.h = TILE_SIZE * zoom_level;
 
   SDL_RenderCopy(renderer, texture, rect, &dest);
+
+  // Render the tile texture
+  SDL_RenderCopy(renderer, texture, rect, &dest);
+
+  // Set the color to blue for the tile border
+  SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
+
+  // Draw the border around the tile
+  SDL_RenderDrawRect(renderer, &dest);
+
+  // Reset render color to default (black)
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 }

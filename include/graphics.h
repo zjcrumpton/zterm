@@ -15,6 +15,8 @@ enum TextureFile {
   TEXTURE_DECORATIONS,
 };
 
+extern SDL_Renderer *renderer;
+
 int init_graphics();
 int load_textures();
 void render_frame();

@@ -18,6 +18,11 @@ int main() {
   generate_initial_chunks();
   init_camera();
 
+  int tile_x, tile_y;
+  ChunkCoordinate coord;
+  world_to_chunk_and_tile(0, 0, &coord, &tile_x, &tile_y);
+  printf("coords: %n,%n\n", &tile_x, &tile_y);
+
   while (game_state.running) {
     handle_input();
     clear();

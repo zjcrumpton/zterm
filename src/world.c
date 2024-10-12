@@ -1,6 +1,7 @@
 #include "../include/world.h"
 #include "../include/camera.h"
 #include "../include/chunk_map.h"
+#include "../include/debug.h"
 #include "../include/defs.h"
 #include "../include/graphics.h"
 #include <SDL2/SDL_rect.h>
@@ -121,38 +122,36 @@ void render_chunk_with_camera(Chunk *chunk) {
 }
 
 void draw_visible_tiles() {
-  int chunk_x_start = floor(camera->x / (CHUNK_SIZE * TILE_SIZE));
-  int chunk_y_start = floor(camera->y / (CHUNK_SIZE * TILE_SIZE));
-  int chunk_x_end =
-      ceil((camera->x + camera->width) / (CHUNK_SIZE * TILE_SIZE));
-  int chunk_y_end =
-      ceil((camera->y + camera->height) / (CHUNK_SIZE * TILE_SIZE));
+  // Half dimensions for centering the camera
+  int half_width = camera->width / 2;
+  int half_height = camera->height / 2;
 
-  for (int chunk_x = chunk_x_start; chunk_x <= chunk_x_end; chunk_x++) {
-    for (int chunk_y = chunk_y_start; chunk_y <= chunk_y_end; chunk_y++) {
-      ChunkCoordinate coord = {chunk_x, chunk_y};
-      Chunk *chunk = get_chunk(coord);
+  // Calculate the global world bounds for the visible area
+  int world_x_min = camera->x - half_width;
+  int world_x_max = camera->x + half_width;
+  int world_y_min = camera->y - half_height;
+  int world_y_max = camera->y + half_height;
+
+  // Loop over the chunks and tiles within the bounds
+  for (int world_x = world_x_min; world_x < world_x_max; world_x += TILE_SIZE) {
+    for (int world_y = world_y_min; world_y < world_y_max;
+         world_y += TILE_SIZE) {
+      // Convert world coordinates to chunk and tile indices
+      ChunkCoordinate chunk_coord;
+      int tile_x, tile_y;
+      world_to_chunk_and_tile(world_x, world_y, &chunk_coord, &tile_x, &tile_y);
+
+      Chunk *chunk = get_chunk(chunk_coord);
       if (chunk != NULL) {
-        for (int tile_x = 0; tile_x < CHUNK_SIZE; tile_x++) {
-          for (int tile_y = 0; tile_y < CHUNK_SIZE; tile_y++) {
-            // Calculate the world position of the tile
-            int world_x = chunk_x * CHUNK_SIZE * TILE_SIZE + tile_x * TILE_SIZE;
-            int world_y = chunk_y * CHUNK_SIZE * TILE_SIZE + tile_y * TILE_SIZE;
+        // Calculate the screen position
+        int screen_x = (world_x - world_x_min) * zoom_level;
+        int screen_y = (world_y - world_y_min) * zoom_level;
 
-            // Convert to screen coordinates
-            int screen_x = world_x - camera->x;
-            int screen_y = world_y - camera->y;
-
-            // Render the tile if it's within the camera's view
-            if (screen_x >= 0 && screen_x < camera->width && screen_y >= 0 &&
-                screen_y < camera->height) {
-              TileType tile_type = chunk->tiles[tile_x][tile_y].type;
-              SDL_Rect rect = get_tile_rect(tile_type);
-              enum TextureFile file = get_tile_texture_file(tile_type);
-              render_tile(&rect, file, screen_x, screen_y);
-            }
-          }
-        }
+        // Get the tile type and render it
+        TileType tile_type = chunk->tiles[tile_x][tile_y].type;
+        SDL_Rect rect = get_tile_rect(tile_type);
+        enum TextureFile file = get_tile_texture_file(tile_type);
+        render_tile(&rect, file, screen_x, screen_y);
       }
     }
   }

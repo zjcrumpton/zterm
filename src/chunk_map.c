@@ -1,5 +1,7 @@
 #include "../include/chunk_map.h"
+#include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 ChunkEntry *chunk_table[CHUNK_HASH_SIZE];
 
@@ -64,4 +66,13 @@ void free_chunks() {
       current = next;
     }
   }
+}
+
+void world_to_chunk_and_tile(int world_x, int world_y, ChunkCoordinate *coord,
+                             int *tile_x, int *tile_y) {
+  coord->x = floorf((float)world_x / (CHUNK_SIZE * TILE_SIZE));
+  coord->y = floorf((float)world_y / (CHUNK_SIZE * TILE_SIZE));
+
+  *tile_x = abs(world_x % (CHUNK_SIZE * TILE_SIZE)) / TILE_SIZE;
+  *tile_y = abs(world_y % (CHUNK_SIZE * TILE_SIZE)) / TILE_SIZE;
 }
