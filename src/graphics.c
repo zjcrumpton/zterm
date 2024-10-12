@@ -2,6 +2,7 @@
 #include "../include/defs.h"
 #include "../include/game_state.h"
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_video.h>
@@ -66,12 +67,19 @@ int load_textures() {
   if (forest_texture == NULL) {
     printf("SDL could not load forest texture! SDL_Error: %s\n",
            SDL_GetError());
-    char cwd[1024];
-    getcwd(cwd, sizeof(cwd));
-    printf("Current working dir: %s\n", cwd);
     return -1;
   }
   textures.forest = forest_texture;
+
+  SDL_Texture *decorations_texture = NULL;
+  decorations_texture =
+      IMG_LoadTexture(renderer, "./assets/forest_pack/Decorations.png");
+  if (decorations_texture == NULL) {
+    printf("SDL could not load forest texture! SDL_Error: %s\n",
+           SDL_GetError());
+
+    return -1;
+  }
 
   return 0;
 }

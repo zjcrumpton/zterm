@@ -1,5 +1,6 @@
 #include "../include/world.h"
 #include "../include/defs.h"
+#include <SDL2/SDL_rect.h>
 #include <stdlib.h>
 
 void populate_chunk(Chunk *chunk) {
@@ -33,4 +34,23 @@ void populate_initial_chunk(Chunk *chunk) {
       }
     }
   }
+}
+
+SDL_Rect get_tile_rect(TileType tile_type) {
+  SDL_Rect rect;
+  rect.w = TILE_SIZE;
+  rect.h = TILE_SIZE;
+
+  switch (tile_type) {
+  case TILE_GRASS:
+    rect.x = 10;
+    rect.y = 6;
+    break;
+  case TILE_TREE:
+    rect.x = 0;
+    rect.y = 0;
+    break;
+  }
+
+  return rect;
 }
