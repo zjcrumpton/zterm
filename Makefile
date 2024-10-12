@@ -17,3 +17,5 @@ build/%.o: src/%.c
 clean:
 	rm -f build/*.o $(EXEC)
 
+debug: CFLAGS += -g -O0
+debug: $(EXEC)

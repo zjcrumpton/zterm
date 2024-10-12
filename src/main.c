@@ -1,3 +1,5 @@
+#include "../include/camera.h"
+#include "../include/chunk_map.h"
 #include "../include/game_state.h"
 #include "../include/graphics.h"
 #include "../include/input.h"
@@ -12,17 +14,19 @@ int main() {
     return -1;
   }
 
-  Chunk chunk = {};
-  populate_initial_chunk(&chunk);
-  render_chunk(&chunk, 0, 0);
+  init_chunk_map();
+  generate_initial_chunks();
+  init_camera();
 
   while (game_state.running) {
     handle_input();
     clear();
-    render_chunk(&chunk, 0, 0);
+    draw_visible_tiles();
     render_frame();
   }
 
   cleanup_graphics();
+  free_camera();
+  free_chunks();
   return 0;
 }
