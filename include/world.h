@@ -20,5 +20,6 @@ typedef struct {
 
 void populate_chunk(Chunk *chunk);
 void populate_initial_chunk(Chunk *chunk);
+void render_chunk(Chunk *chunk, int x_offset, int y_offset);
 
 #endif

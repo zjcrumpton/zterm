@@ -2,6 +2,7 @@
 #define GRAPHICS_H
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_render.h>
 
 typedef struct {
@@ -17,7 +18,9 @@ enum TextureFile {
 int init_graphics();
 int load_textures();
 void render_frame();
+void clear();
 void cleanup_graphics();
 void toggle_fullscreen();
+void render_tile(SDL_Rect *rect, enum TextureFile file, int x, int y);
 
 #endif

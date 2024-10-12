@@ -43,11 +43,8 @@ int init_graphics() {
   return 0;
 }
 
-void render_frame() {
-  SDL_FillRect(screenSurface, NULL,
-               SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-  SDL_UpdateWindowSurface(window);
-}
+void clear() { SDL_RenderClear(renderer); }
+void render_frame() { SDL_RenderPresent(renderer); }
 
 void cleanup_graphics() {
   SDL_DestroyWindow(window);
@@ -82,4 +79,24 @@ int load_textures() {
   }
 
   return 0;
+}
+
+void render_tile(SDL_Rect *rect, enum TextureFile file, int x, int y) {
+  SDL_Texture *texture;
+  switch (file) {
+  case TEXTURE_FLOOR:
+    texture = textures.forest;
+    break;
+  case TEXTURE_DECORATIONS:
+    texture = textures.decorations;
+    break;
+  }
+
+  SDL_Rect dest;
+  dest.x = x;
+  dest.y = y;
+  dest.w = TILE_SIZE;
+  dest.h = TILE_SIZE;
+
+  SDL_RenderCopy(renderer, texture, rect, &dest);
 }
