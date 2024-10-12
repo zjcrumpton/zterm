@@ -1,12 +1,14 @@
+#include "../include/game_state.h"
 #include "../include/graphics.h"
+#include "../include/input.h"
 
 int main() {
   if (init_graphics() < 0) {
     return -1;
   }
 
-  int running = 1;
-  while (running) {
+  while (game_state.running) {
+    handle_input();
     render_frame();
   }
 

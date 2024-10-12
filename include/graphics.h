@@ -6,5 +6,6 @@
 int init_graphics();
 void render_frame();
 void cleanup_graphics();
+void toggle_fullscreen();
 
 #endif

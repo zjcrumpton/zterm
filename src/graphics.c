@@ -1,5 +1,6 @@
 #include "../include/graphics.h"
 #include "../include/defs.h"
+#include "../include/game_state.h"
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_video.h>
 #include <stdio.h>
@@ -21,6 +22,10 @@ int init_graphics() {
     return -1;
   }
 
+  if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN < 0)) {
+    printf("SDL could not go fullscreen! SDL_Error: %s\n", SDL_GetError());
+  }
+
   screenSurface = SDL_GetWindowSurface(window);
   return 0;
 }
@@ -34,4 +39,10 @@ void render_frame() {
 void cleanup_graphics() {
   SDL_DestroyWindow(window);
   SDL_Quit();
+}
+
+void toggle_fullscreen() {
+  game_state.fullscreen = !game_state.fullscreen;
+  int flags = game_state.fullscreen ? 0 : SDL_WINDOW_FULLSCREEN;
+  SDL_SetWindowFullscreen(window, flags);
 }
