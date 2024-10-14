@@ -1,5 +1,4 @@
 #include "../include/graphics.h"
-#include "../include/camera.h"
 #include "../include/defs.h"
 #include "../include/game_state.h"
 #include <SDL2/SDL_image.h>
@@ -96,8 +95,8 @@ void render_tile(SDL_Rect *rect, enum TextureFile file, int x, int y) {
   SDL_Rect dest;
   dest.x = x;
   dest.y = y;
-  dest.w = TILE_SIZE * zoom_level;
-  dest.h = TILE_SIZE * zoom_level;
+  dest.w = TILE_SIZE;
+  dest.h = TILE_SIZE;
 
   SDL_RenderCopy(renderer, texture, rect, &dest);
 

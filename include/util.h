@@ -37,4 +37,10 @@ typedef Tile **TileMap;
 TileMap new_tilemap(int width, int height);
 void destroy_tilemap(TileMap tilemap, int height);
 
+typedef struct {
+  Vector2 pos;
+  int vp_width;
+  int vp_height;
+} Camera;
+
 #endif

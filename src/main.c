@@ -1,15 +1,16 @@
-#include "../include/camera.h"
 #include "../include/chunk.h"
 #include "../include/chunk_map.h"
 #include "../include/game_state.h"
 #include "../include/graphics.h"
 #include "../include/input.h"
+#include "../include/player.h"
 #include "../include/proc_gen.h"
 #include "../include/tile_manager.h"
-#include "../include/util.h"
 
 int setup();
 void cleanup();
+
+Player *player = NULL;
 
 int main() {
   if (setup() < 0) {
@@ -45,10 +46,16 @@ int setup() {
 
   generate_adjacent_chunks(chunk->pos);
 
+  player = new_player();
+  if (player == NULL) {
+    return -1;
+  }
+
   return 0;
 }
 
 void cleanup() {
   cleanup_graphics();
   destroy_tile_manager();
+  destroy_player(player);
 }

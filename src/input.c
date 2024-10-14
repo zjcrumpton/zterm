@@ -1,10 +1,7 @@
 #include "../include/input.h"
-#include "../include/camera.h"
-#include "../include/chunk_map.h"
 #include "../include/game_state.h"
 #include "../include/graphics.h"
 #include <SDL2/SDL_events.h>
-#include <stdio.h>
 
 Action map_input_to_action(SDL_Event *event) {
   switch (event->type) {
@@ -53,22 +50,16 @@ void handle_input() {
       toggle_fullscreen();
       break;
     case ACTION_ZOOM_IN:
-      zoom_in();
       break;
     case ACTION_ZOOM_OUT:
-      zoom_out();
       break;
     case ACTION_MOVE_CAMERA_RIGHT:
-      move_camera_right(32);
       break;
     case ACTION_MOVE_CAMERA_LEFT:
-      move_camera_left(32);
       break;
     case ACTION_MOVE_CAMERA_UP:
-      move_camera_up(32);
       break;
     case ACTION_MOVE_CAMERA_DOWN:
-      move_camera_down(32);
       break;
     }
   }
