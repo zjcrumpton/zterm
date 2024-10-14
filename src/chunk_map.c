@@ -5,22 +5,32 @@
 
 ChunkEntry *chunk_table[CHUNK_HASH_SIZE];
 
+uint32_t float_to_uint32(float value) {
+  union {
+    float f;
+    uint32_t u;
+  } converter;
+  converter.f = value;
+  return converter.u;
+}
+
 void init_chunk_map() {
   for (int i = 0; i < CHUNK_HASH_SIZE; i++) {
     chunk_table[i] = NULL;
   }
 }
 
-unsigned int hash_chunk(ChunkCoordinate coord) {
-  long long hash = ((long long)coord.x * 31 + coord.y) % CHUNK_HASH_SIZE;
-  return (unsigned int)(hash < 0 ? -hash : hash);
+unsigned int hash_chunk(Vector2 coord) {
+  uint32_t x_hash = float_to_uint32(coord.x);
+  uint32_t y_hash = float_to_uint32(coord.y);
+
+  return (x_hash ^ (y_hash * 0x9e3779b9)) % CHUNK_HASH_SIZE;
 }
 
-void add_chunk(ChunkCoordinate coord, Chunk *chunk) {
-  unsigned int index = hash_chunk(coord);
-
+void add_chunk(WorldChunk *chunk) {
+  unsigned int index = hash_chunk(chunk->pos);
   ChunkEntry *new_entry = (ChunkEntry *)malloc(sizeof(ChunkEntry));
-  new_entry->coord = coord;
+  new_entry->coord = chunk->pos;
   new_entry->chunk = chunk;
   new_entry->next = NULL;
 
@@ -41,7 +51,7 @@ void add_chunk(ChunkCoordinate coord, Chunk *chunk) {
   }
 }
 
-Chunk *get_chunk(ChunkCoordinate coord) {
+WorldChunk *get_chunk(Vector2 coord) {
   unsigned int index = hash_chunk(coord);
 
   ChunkEntry *current = chunk_table[index];
@@ -68,7 +78,7 @@ void free_chunks() {
   }
 }
 
-void world_to_chunk_and_tile(int world_x, int world_y, ChunkCoordinate *coord,
+void world_to_chunk_and_tile(int world_x, int world_y, Vector2 *coord,
                              int *tile_x, int *tile_y) {
   coord->x = floorf((float)world_x / (CHUNK_SIZE * TILE_SIZE));
   coord->y = floorf((float)world_y / (CHUNK_SIZE * TILE_SIZE));

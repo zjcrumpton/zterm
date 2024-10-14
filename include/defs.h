@@ -17,4 +17,7 @@ extern const int TILE_SIZE;
 extern const int TILES_ACROSS;
 extern const int TILES_DOWN;
 
+#define TILEMAP_WIDTH 32
+#define TILEMAP_HEIGHT 32
+
 #endif

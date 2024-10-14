@@ -8,6 +8,8 @@
 
 Action map_input_to_action(SDL_Event *event) {
   switch (event->type) {
+  case SDL_QUIT:
+    return ACTION_QUIT;
   case SDL_KEYDOWN:
     switch (event->key.keysym.sym) {
     case SDLK_q:
@@ -69,12 +71,5 @@ void handle_input() {
       move_camera_down(32);
       break;
     }
-    printf("camera position (%i, %i)\n", camera->x, camera->y);
-    ChunkCoordinate coord;
-    int tile_x, tile_y;
-    world_to_chunk_and_tile(camera->x, camera->y, &coord, &tile_x, &tile_y);
-
-    printf("mapped chunk and tile position Chunk: (%i, %i) Tile: (%i, %i)\n",
-           coord.x, coord.y, tile_x, tile_y);
   }
 }
