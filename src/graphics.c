@@ -80,35 +80,3 @@ int load_textures() {
 
   return 0;
 }
-
-void render_tile(SDL_Rect *rect, enum TextureFile file, int x, int y) {
-  SDL_Texture *texture;
-  switch (file) {
-  case TEXTURE_FLOOR:
-    texture = textures.forest;
-    break;
-  case TEXTURE_DECORATIONS:
-    texture = textures.decorations;
-    break;
-  }
-
-  SDL_Rect dest;
-  dest.x = x;
-  dest.y = y;
-  dest.w = TILE_SIZE;
-  dest.h = TILE_SIZE;
-
-  SDL_RenderCopy(renderer, texture, rect, &dest);
-
-  // Render the tile texture
-  SDL_RenderCopy(renderer, texture, rect, &dest);
-
-  // Set the color to blue for the tile border
-  SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-
-  // Draw the border around the tile
-  SDL_RenderDrawRect(renderer, &dest);
-
-  // Reset render color to default (black)
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-}

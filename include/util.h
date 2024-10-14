@@ -32,6 +32,8 @@ typedef struct {
   bool walkable;
 } Tile;
 
+void render_tile(Tile *tile, int screen_x, int screen_y, int zoom_level);
+
 typedef Tile **TileMap;
 
 TileMap new_tilemap(int width, int height);

@@ -78,6 +78,30 @@ void free_chunks() {
   }
 }
 
+Tile *get_tile_from_world_pos(Vector2 pos) {
+  Vector2 chunk_pos = new_vector(pos.x / (CHUNK_SIZE * TILE_SIZE),
+                                 pos.y / (CHUNK_SIZE * TILE_SIZE));
+  chunk_pos.x = floorf(chunk_pos.x);
+  chunk_pos.y = floorf(chunk_pos.y);
+
+  WorldChunk *chunk = get_chunk(chunk_pos);
+  if (chunk == NULL) {
+    printf("COULD NOT FIND THE CHUNK");
+    exit(1);
+  }
+
+  Vector2 tile_pos =
+      new_vector((int)pos.x % (int)((CHUNK_SIZE * TILE_SIZE) / TILE_SIZE),
+                 (int)pos.y % (CHUNK_SIZE * TILE_SIZE) / TILE_SIZE);
+  Tile *tile = &chunk->tilemap[(int)tile_pos.x][(int)tile_pos.y];
+  if (tile == NULL) {
+    printf("COULD NOT FIND THE TILE");
+    exit(1);
+  }
+
+  return tile;
+}
+
 void world_to_chunk_and_tile(int world_x, int world_y, Vector2 *coord,
                              int *tile_x, int *tile_y) {
   coord->x = floorf((float)world_x / (CHUNK_SIZE * TILE_SIZE));

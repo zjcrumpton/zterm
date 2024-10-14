@@ -20,5 +20,6 @@ WorldChunk *get_chunk(Vector2 coord);
 void free_chunks();
 void world_to_chunk_and_tile(int world_x, int world_y, Vector2 *coord,
                              int *tile_x, int *tile_y);
+Tile *get_tile_from_world_pos(Vector2 pos);
 
 #endif

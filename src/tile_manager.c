@@ -15,7 +15,7 @@ int init_tile_manager() {
     return -1;
   }
 
-  Sprite dirt_sprite = new_sprite(1, 6, TILE_SIZE, TILE_SIZE, textures.forest);
+  Sprite dirt_sprite = new_sprite(10, 6, TILE_SIZE, TILE_SIZE, textures.forest);
   Tile dirt;
   dirt.type = TILE_DIRT;
   dirt.sprite = dirt_sprite;

@@ -24,6 +24,5 @@ void render_frame();
 void clear();
 void cleanup_graphics();
 void toggle_fullscreen();
-void render_tile(SDL_Rect *rect, enum TextureFile file, int x, int y);
 
 #endif
